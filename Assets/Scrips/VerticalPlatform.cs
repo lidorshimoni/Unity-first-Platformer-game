@@ -5,7 +5,7 @@ using UnityEngine;
 public class VerticalPlatform : MonoBehaviour
 {
     private PlatformEffector2D effector;
-    public float waitTime;
+    public float waitTime = 0.01f;
 
     void Start()
     {
@@ -14,9 +14,15 @@ public class VerticalPlatform : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.UpArrow))
+            effector.rotationalOffset = 0;
+    }
+
+    void OnCollisionEnter2D(Collision2D colider)
+    {
         if (Input.GetKeyUp(KeyCode.DownArrow))
             waitTime = 0.01f;
-        if(Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             if (waitTime <= 0)
             {
@@ -26,7 +32,5 @@ public class VerticalPlatform : MonoBehaviour
             else
                 waitTime -= Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.UpArrow))
-            effector.rotationalOffset = 0;
     }
 }
